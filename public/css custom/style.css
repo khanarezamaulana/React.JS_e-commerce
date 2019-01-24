@@ -1,0 +1,138 @@
+/* css document */
+
+#header {
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 13px;
+}
+
+.font-menu {
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 13px;
+}
+
+.font-category {
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 13px;
+}
+
+.font-knitwear {
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 12px;
+}
+
+#logo {
+    height: 30px;
+    margin-top: -3px;
+    margin-right: 5px;
+}
+
+.carousel-caption {
+    top: 400px;
+}
+
+.radiuscarousel li {
+    position: relative;
+    -ms-flex: 0 1 auto;
+    flex: 0 1 auto;
+    width: 10px;
+    height: 10px;
+    margin-right: 3px;
+    margin-left: 3px;
+    text-indent: -999px;
+    cursor: pointer;
+    border-radius: 100%;
+    background-color: rgba(255, 255, 255, 0.5);
+  }
+
+#info {
+    background-color: black
+    text-colo    
+}
+
+.bg-black {
+    background-color: black; 
+    color:white;
+    font-weight: 300;
+    text-align: center;
+}
+
+.m-right {
+    border: 8px solid black; 
+    border-right: 2px solid white;
+}
+
+.underline {
+    width: 150px;
+    height: 2px;
+    background-color: black;
+}
+
+#featuredUnderline {
+    width: 100px;
+    height: 2px;
+    background-color: black;
+}
+
+#footerunderline {
+    max-width: 50px;
+}
+
+.bg-light-gray {
+    background-color: rgba(111, 111, 111, 0.09);
+}
+
+.btn-danger {
+    background-color: black;
+}
+
+.btn-warning {
+    background-color: yellow;
+}
+
+.green .btn-success {
+    background-color: goldenrod;
+}
+
+.maroon .btn-success {
+    background-color: maroon;
+}
+
+.media img {
+    max-width: 150px;
+    height: auto;
+}
+
+.card-body {
+    text-align: center;
+}
+
+.blog .media img {
+    max-width: 200px;
+    height: auto;
+}
+
+.underline-black {
+    width: 70px;
+    height: 2px;
+    background-color: black;
+}
+
+#recentpostimage1 {
+    max-width: 100px;
+    height: auto;
+}
+
+#pro {
+    text-align: center;
+}
+
+.footer-line {
+    width: 1150px;
+    height: 1px;
+    background-color: white;
+    opacity: 0.3;
+}
+
+.footer-bg {
+    background-color: black;
+}
