@@ -1,7 +1,9 @@
 var router = require('express').Router();
 var mysql = require('mysql');
 var bodyParser = require('body-parser');
+var cors = require('cors');
 router.use(bodyParser.json())
+router.use(cors())
 
 var db = mysql.createConnection({
     host: 'localhost',
@@ -15,8 +17,8 @@ db.connect(()=>{
 });
 
 // route get all data user
-router.get('/user', (req, res)=>{
-    var ambil = 'select * from user';
+router.get('/users', (req, res)=>{
+    var ambil = 'select * from users';
     db.query(ambil, (err, result)=>{
         if(err) throw err;
         console.log(result);

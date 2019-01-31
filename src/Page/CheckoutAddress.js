@@ -26,7 +26,7 @@ class CheckoutAddress extends React.Component {
                     <div className="row">
                     
                     {/* Checkout Adress */}
-                    <div className="col-xl-9 col-lg-8" style={{paddingBottom: "80px"}}>
+                    <div className="col-xl-9 col-lg-8" style={{marginBottom: "80px"}}>
                         <div className="checkout-steps"><a href="/checkout-review">4. Review</a><a href="/checkout-payment"><span className="angle"></span>3. Payment</a><a href="/checkout-shipping"><span className="angle"></span>2. Shipping</a><a className="active" href="/checkout-address"><span className="angle"></span>1. Address</a></div>
                         <h4>Billing Address</h4>
                         <hr className="padding-bottom-1x"/>
@@ -60,9 +60,16 @@ class CheckoutAddress extends React.Component {
                         </div>
                         <div className="row">
                         <div className="col-sm-6">
-                            <div className="form-group">
-                            <label for="checkout-company">Company</label>
-                            <input className="form-control" type="text" id="checkout-company"/>
+                        <div className="form-group">
+                            <label for="checkout-city">City</label>
+                            <select className="form-control" id="checkout-city">
+                                <option>Choose city</option>
+                                <option>Amsterdam</option>
+                                <option>Berlin</option>
+                                <option>Geneve</option>
+                                <option>New York</option>
+                                <option>Paris</option>
+                            </select>
                             </div>
                         </div>
                         <div className="col-sm-6">
@@ -82,16 +89,9 @@ class CheckoutAddress extends React.Component {
                         </div>
                         <div className="row">
                         <div className="col-sm-6">
-                            <div className="form-group">
-                            <label for="checkout-city">City</label>
-                            <select className="form-control" id="checkout-city">
-                                <option>Choose city</option>
-                                <option>Amsterdam</option>
-                                <option>Berlin</option>
-                                <option>Geneve</option>
-                                <option>New York</option>
-                                <option>Paris</option>
-                            </select>
+                        <div className="form-group">
+                            <label for="checkout-company">Address</label>
+                            <input className="form-control" type="text" id="checkout-company"/>
                             </div>
                         </div>
                         <div className="col-sm-6">
@@ -101,7 +101,7 @@ class CheckoutAddress extends React.Component {
                             </div>
                         </div>
                         </div>
-                        <div className="row padding-bottom-1x">
+                        {/* <div className="row padding-bottom-1x">
                         <div className="col-sm-6">
                             <div className="form-group">
                             <label for="checkout-address1">Address 1</label>
@@ -114,7 +114,7 @@ class CheckoutAddress extends React.Component {
                             <input className="form-control" type="text" id="checkout-address2"/>
                             </div>
                         </div>
-                        </div>
+                        </div> */}
                         <h4>Shipping Address</h4>
                         <hr className="padding-bottom-1x"/>
                         <div className="form-group">
@@ -130,7 +130,7 @@ class CheckoutAddress extends React.Component {
                     </div>
                     
                     {/* Sidebar */}
-                    <div className="col-xl-3 col-lg-4">
+                    <div className="col-xl-3 col-lg-4" style={{marginBottom: "80px"}}>
                         <aside className="sidebar">
                         <div className="padding-top-2x hidden-lg-up"></div>
                         

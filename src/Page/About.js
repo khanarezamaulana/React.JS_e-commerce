@@ -64,22 +64,22 @@ class About extends React.Component {
                     </div>
                     <div className="row" style={{paddingBottom: "80px"}}>
                         <div className="col-md-3 col-sm-6 mb-30 text-center"><img className="d-block w-150 mx-auto img-thumbnail rounded-circle mb-2" src="img/team/01.jpg" alt="Team"/>
-                        <h6>Grace Wright</h6>
+                        <h6>Khana Reza Maulana</h6>
                         <p className="text-muted mb-2">Founder, CEO</p>
                         <div className="social-bar"><a className="social-button shape-circle sb-facebook" href="" data-toggle="tooltip" data-placement="top" title="Facebook"><i className="socicon-facebook"></i></a><a className="social-button shape-circle sb-twitter" href="" data-toggle="tooltip" data-placement="top" title="Twitter"><i className="socicon-twitter"></i></a><a className="social-button shape-circle sb-google-plus" href="" data-toggle="tooltip" data-placement="top" title="Google +"><i className="socicon-googleplus"></i></a></div>
                         </div>
                         <div className="col-md-3 col-sm-6 mb-30 text-center"><img className="d-block w-150 mx-auto img-thumbnail rounded-circle mb-2" src="img/team/02.jpg" alt="Team"/>
-                        <h6>Taylor Jackson</h6>
+                        <h6>Khana Reza Maulana</h6>
                         <p className="text-muted mb-2">Financial Director</p>
                         <div className="social-bar"><a className="social-button shape-circle sb-skype" href="" data-toggle="tooltip" data-placement="top" title="Skype"><i className="socicon-skype"></i></a><a className="social-button shape-circle sb-facebook" href="" data-toggle="tooltip" data-placement="top" title="Facebook"><i className="socicon-facebook"></i></a><a className="social-button shape-circle sb-paypal" href="" data-toggle="tooltip" data-placement="top" title="PayPal"><i className="socicon-paypal"></i></a></div>
                         </div>
                         <div className="col-md-3 col-sm-6 mb-30 text-center"><img className="d-block w-150 mx-auto img-thumbnail rounded-circle mb-2" src="img/team/03.jpg" alt="Team"/>
-                        <h6>Quinton Cross</h6>
+                        <h6>Khana Reza Maulana</h6>
                         <p className="text-muted mb-2">Marketing Director</p>
                         <div className="social-bar"><a className="social-button shape-circle sb-twitter" href="" data-toggle="tooltip" data-placement="top" title="Twitter"><i className="socicon-twitter"></i></a><a className="social-button shape-circle sb-google-plus" href="" data-toggle="tooltip" data-placement="top" title="Google +"><i className="socicon-googleplus"></i></a><a className="social-button shape-circle sb-email" href="" data-toggle="tooltip" data-placement="top" title="Email"><i className="socicon-mail"></i></a></div>
                         </div>
                         <div className="col-md-3 col-sm-6 mb-30 text-center"><img className="d-block w-150 mx-auto img-thumbnail rounded-circle mb-2" src="img/team/04.jpg" alt="Team"/>
-                        <h6>Liana Mullen</h6>
+                        <h6>Khana Reza Maulana</h6>
                         <p className="text-muted mb-2">Lead Designer</p>
                         <div className="social-bar"><a className="social-button shape-circle sb-behance" href="" data-toggle="tooltip" data-placement="top" title="Behance"><i className="socicon-behance"></i></a><a className="social-button shape-circle sb-dribbble" href="" data-toggle="tooltip" data-placement="top" title="Dribbble"><i className="socicon-dribbble"></i></a><a className="social-button shape-circle sb-instagram" href="" data-toggle="tooltip" data-placement="top" title="Instagram"><i className="socicon-instagram"></i></a></div>
                         </div>

@@ -15,6 +15,8 @@ import CheckoutShipping from './Page/CheckoutShipping';
 import CheckoutReview from './Page/CheckoutReview';
 import CheckoutComplete from './Page/CheckoutComplete';
 import ProductDetail from './Page/ProductDetail';
+import Dashboard from './Admin/Dashboard';
+
 
 class App extends Component {
   render() {
@@ -35,6 +37,7 @@ class App extends Component {
           <Route path="/checkout-payment" component={CheckoutPayment} />
           <Route path="/checkout-review" component={CheckoutReview} />
           <Route path="/checkout-complete" component={CheckoutComplete} />
+          <Route path="/dashboard" component={Dashboard} />
         </div>
 
         <Footer />

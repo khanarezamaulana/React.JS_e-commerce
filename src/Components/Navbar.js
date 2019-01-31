@@ -7,7 +7,7 @@ class Navbar extends React.Component {
 
         <div>
             {/* Header */}
-            <div className="container-fluid bg-black header-top d-none d-md-block fixed-top">
+            <div className="container-fluid bg-dark header-top d-none d-md-block fixed-top">
                     <div id="header" className="row  text-light py-2">
                         <div className="col-lg-6">
                             
