@@ -4,7 +4,7 @@ class Footer extends React.Component {
     render() {
         return(
 
-            <div>
+            <div style={{marginTop: "150px"}}>
                 {/* Site Footer*/}
                 <footer class="site-footer">
                     <div class="container">

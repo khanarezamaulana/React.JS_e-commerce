@@ -1,6 +1,58 @@
 import React from 'react';
+import axios from 'axios';
 
 class Shop extends React.Component {
+
+    constructor() {
+        super();
+        this.state = {
+            productData: {
+                productname: "",
+                price: "",
+                picture: ""
+            },
+            productData: [],
+            isLoading: false
+        }
+    }
+
+    // SHOW PRODUCT
+    componentDidMount(){
+        this.setState({isLoading: true})
+        axios.get('http://localhost:2018/products').then((x) => {
+            console.log(x.data)
+            this.setState({
+                productData: x.data,
+                isLoading: false
+            }) 
+            console.log(this.state.productData)
+        }).catch((x) => {
+            console.log(x)
+        })
+    }
+
+    displayProduct(){
+        return this.state.productData.map((val, index) => {
+            return (
+                <div className="grid-item">
+                <div className="product-card">
+                    {/* <div className="product-badge text-danger">50% Off</div> */}
+                    <a className="product-thumb" href={`/shop/${val.productID}`} ><img src={val.picture} alt="Product"/></a>
+                    <h3 className="product-title"><a href="">{val.productname}</a></h3>
+                    <h4 className="product-price">
+                    {/* <del>IDR 1,227,000</del> */}
+                    Rp. {val.price}
+                    </h4>
+                    <div className="product-buttons">
+                    <button className="btn btn-outline-secondary btn-sm btn-wishlist" data-toggle="tooltip" title="Whishlist"><i className="icon-heart"></i></button>
+                    <button className="btn btn-outline-primary btn-sm" data-toast data-toast-type="success" data-toast-position="topRight" data-toast-icon="icon-circle-check" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</button>
+                    </div>
+                </div>
+                </div>
+            )
+        })
+    }
+
     render() {
         return(
 
@@ -54,160 +106,8 @@ class Shop extends React.Component {
                             <div className="grid-sizer"></div>
 
                             {/* Product */}
-                            <div className="grid-item">
-                            <div className="product-card">
-                                <div className="product-badge text-danger">50% Off</div><a className="product-thumb" href="shop-single.html"><img src="img/shop/products/01.jpg" alt="Product"/></a>
-                                <h3 className="product-title"><a href="shop-single.html">Unionbay Park</a></h3>
-                                <h4 className="product-price">
-                                <del>IDR 1,227,000</del>IDR 599,000
-                                </h4>
-                                <div className="product-buttons">
-                                <button className="btn btn-outline-secondary btn-sm btn-wishlist" data-toggle="tooltip" title="Whishlist"><i className="icon-heart"></i></button>
-                                <button className="btn btn-outline-primary btn-sm" data-toast data-toast-type="success" data-toast-position="topRight" data-toast-icon="icon-circle-check" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</button>
-                                </div>
-                            </div>
-                            </div>
+                            {this.displayProduct()}
 
-                            {/* Product */}
-                            <div className="grid-item">
-                            <div className="product-card"><a className="product-thumb" href="shop-single.html"><img src="img/shop/products/02.jpg" alt="Product"/></a>
-                                <h3 className="product-title"><a href="shop-single.html">Cole Haan Crossbody</a></h3>
-                                <h4 className="product-price">IDR 2,377,000</h4>
-                                <div className="product-buttons">
-                                <button className="btn btn-outline-secondary btn-sm btn-wishlist" data-toggle="tooltip" title="Whishlist"><i className="icon-heart"></i></button>
-                                <button className="btn btn-outline-primary btn-sm" data-toast data-toast-type="success" data-toast-position="topRight" data-toast-icon="icon-circle-check" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</button>
-                                </div>
-                            </div>
-                            </div>
-
-                            {/* Product */}
-                            <div className="grid-item">
-                            <div className="product-card">
-                                <div className="rating-stars"><i className="icon-star filled"></i><i className="icon-star filled"></i><i className="icon-star filled"></i><i className="icon-star filled"></i><i className="icon-star"></i>
-                                </div><a className="product-thumb" href="shop-single.html"><img src="img/shop/products/03.jpg" alt="Product"/></a>
-                                <h3 className="product-title"><a href="shop-single.html">Oakley Kickback</a></h3>
-                                <h4 className="product-price">IDR 1,870,000</h4>
-                                <div className="product-buttons">
-                                <button className="btn btn-outline-secondary btn-sm btn-wishlist" data-toggle="tooltip" title="Whishlist"><i className="icon-heart"></i></button>
-                                <button className="btn btn-outline-primary btn-sm" data-toast data-toast-type="success" data-toast-position="topRight" data-toast-icon="icon-circle-check" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</button>
-                                </div>
-                            </div>
-                            </div>
-
-                            {/* Product */}
-                            <div className="grid-item">
-                            <div className="product-card">
-                                <div className="product-badge text-muted">Out of stock</div><a className="product-thumb" href="shop-single.html"><img src="img/shop/products/08.jpg" alt="Product"/></a>
-                                <h3 className="product-title"><a href="shop-single.html">Off the Shoulder Top</a></h3>
-                                <h4 className="product-price">IDR 1,477,000</h4>
-                                <div className="product-buttons">
-                                <button className="btn btn-outline-secondary btn-sm btn-wishlist" data-toggle="tooltip" title="Whishlist"><i className="icon-heart"></i></button><a className="btn btn-outline-secondary btn-sm" href="shop-single.html">View Details</a>
-                                </div>
-                            </div>
-                            </div>
-
-                            {/* Product */}
-                            <div className="grid-item">
-                            <div className="product-card">
-                                <div className="rating-stars"><i className="icon-star filled"></i><i className="icon-star filled"></i><i className="icon-star filled"></i><i className="icon-star"></i><i className="icon-star"></i>
-                                </div><a className="product-thumb" href="shop-single.html"><img src="img/shop/products/05.jpg" alt="Product"/></a>
-                                <h3 className="product-title"><a href="shop-single.html">Jordan City Man's Hoodie</a></h3>
-                                <h4 className="product-price">IDR 777,000 </h4>
-                                <div className="product-buttons">
-                                <button className="btn btn-outline-secondary btn-sm btn-wishlist" data-toggle="tooltip" title="Whishlist"><i className="icon-heart"></i></button>
-                                <button className="btn btn-outline-primary btn-sm" data-toast data-toast-type="success" data-toast-position="topRight" data-toast-icon="icon-circle-check" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</button>
-                                </div>
-                            </div>
-                            </div>
-
-                            {/* Product */}
-                            <div className="grid-item">
-                            <div className="product-card">
-                                <div className="product-badge text-danger">40% Off</div><a className="product-thumb" href="shop-single.html"><img src="img/shop/products/06.jpg" alt="Product"/></a>
-                                <h3 className="product-title"><a href="shop-single.html">Palace Shell Track Jacket</a></h3>
-                                <h4 className="product-price">
-                                <del>IDR 750,000</del>IDR 455,000
-                                </h4>
-                                <div className="product-buttons">
-                                <button className="btn btn-outline-secondary btn-sm btn-wishlist" data-toggle="tooltip" title="Whishlist"><i className="icon-heart"></i></button>
-                                <button className="btn btn-outline-primary btn-sm" data-toast data-toast-type="success" data-toast-position="topRight" data-toast-icon="icon-circle-check" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</button>
-                                </div>
-                            </div>
-                            </div>
-
-                            {/* Product */}
-                            <div className="grid-item">
-                            <div className="product-card"><a className="product-thumb" href="shop-single.html"><img src="img/shop/products/04.jpg" alt="Product"/></a>
-                                <h3 className="product-title"><a href="shop-single.html">Waist Leather Belt</a></h3>
-                                <h4 className="product-price">IDR 577,000</h4>
-                                <div className="product-buttons">
-                                <button className="btn btn-outline-secondary btn-sm btn-wishlist" data-toggle="tooltip" title="Whishlist"><i className="icon-heart"></i></button>
-                                <button className="btn btn-outline-primary btn-sm" data-toast data-toast-type="success" data-toast-position="topRight" data-toast-icon="icon-circle-check" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</button>
-                                </div>
-                            </div>
-                            </div>
-
-                            {/* Product */}
-                            <div className="grid-item">
-                            <div className="product-card"><a className="product-thumb" href="shop-single.html"><img src="img/shop/products/10.jpg" alt="Product"/></a>
-                                <h3 className="product-title"><a href="shop-single.html">Daily Fabric Cap</a></h3>
-                                <h4 className="product-price">IDR 455,000</h4>
-                                <div className="product-buttons">
-                                <button className="btn btn-outline-secondary btn-sm btn-wishlist" data-toggle="tooltip" title="Whishlist"><i className="icon-heart"></i></button>
-                                <button className="btn btn-outline-primary btn-sm" data-toast data-toast-type="success" data-toast-position="topRight" data-toast-icon="icon-circle-check" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</button>
-                                </div>
-                            </div>
-                            </div>
-
-                            {/* Product */}
-                            <div className="grid-item">
-                            <div className="product-card">
-                                <div className="rating-stars"><i className="icon-star filled"></i><i className="icon-star filled"></i><i className="icon-star filled"></i><i className="icon-star filled"></i><i className="icon-star filled"></i>
-                                </div><a className="product-thumb" href="shop-single.html"><img src="img/shop/products/11.jpg" alt="Product"/></a>
-                                <h3 className="product-title"><a href="shop-single.html">Top-Sider Fathom</a></h3>
-                                <h4 className="product-price">IDR 1,099,000</h4>
-                                <div className="product-buttons">
-                                <button className="btn btn-outline-secondary btn-sm btn-wishlist" data-toggle="tooltip" title="Whishlist"><i className="icon-heart"></i></button>
-                                <button className="btn btn-outline-primary btn-sm" data-toast data-toast-type="success" data-toast-position="topRight" data-toast-icon="icon-circle-check" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</button>
-                                </div>
-                            </div>
-                            </div>
-
-                            {/* Product */}
-                            <div className="grid-item">
-                            <div className="product-card"><a className="product-thumb" href="shop-single.html"><img src="img/shop/products/16.jpg" alt="Product"/></a>
-                                <h3 className="product-title"><a href="shop-single.html">Big Wordmark Tote</a></h3>
-                                <h4 className="product-price">IDR 377,000</h4>
-                                <div className="product-buttons">
-                                <button className="btn btn-outline-secondary btn-sm btn-wishlist" data-toggle="tooltip" title="Whishlist"><i className="icon-heart"></i></button>
-                                <button className="btn btn-outline-primary btn-sm" data-toast data-toast-type="success" data-toast-position="topRight" data-toast-icon="icon-circle-check" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</button>
-                                </div>
-                            </div>
-                            </div>
-
-                            {/* Product */}
-                            <div className="grid-item">
-                            <div className="product-card"><a className="product-thumb" href="shop-single.html"><img src="img/shop/products/14.jpg" alt="Product"/></a>
-                                <h3 className="product-title"><a href="shop-single.html">Skagen Holst Watch</a></h3>
-                                <h4 className="product-price">IDR 1,670,000</h4>
-                                <div className="product-buttons">
-                                <button className="btn btn-outline-secondary btn-sm btn-wishlist" data-toggle="tooltip" title="Whishlist"><i className="icon-heart"></i></button>
-                                <button className="btn btn-outline-primary btn-sm" data-toast data-toast-type="success" data-toast-position="topRight" data-toast-icon="icon-circle-check" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</button>
-                                </div>
-                            </div>
-                            </div>
-                            
-                            {/* Product */}
-                            <div className="grid-item">
-                            <div className="product-card"><a className="product-thumb" href="shop-single.html"><img src="img/shop/products/15.jpg" alt="Product"/></a>
-                                <h3 className="product-title"><a href="shop-single.html">Metal Star Earings</a></h3>
-                                <h4 className="product-price">IDR 1,112,000</h4>
-                                <div className="product-buttons">
-                                <button className="btn btn-outline-secondary btn-sm btn-wishlist" data-toggle="tooltip" title="Whishlist"><i className="icon-heart"></i></button>
-                                <button className="btn btn-outline-primary btn-sm" data-toast data-toast-type="success" data-toast-position="topRight" data-toast-icon="icon-circle-check" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</button>
-                                </div>
-                            </div>
-                            </div>
                         </div>
                         
                         {/* Pagination */}

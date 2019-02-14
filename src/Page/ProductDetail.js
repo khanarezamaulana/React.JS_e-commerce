@@ -1,6 +1,43 @@
 import React from 'react';
+import axios from 'axios';
 
 class ProductDetail extends React.Component {
+
+    constructor(){
+        super();
+        this.state = {
+            productData: {
+                productname: "",
+                price: "",
+                productdesc: "",
+                size: "",
+                color: "",
+                category: "",
+                picture: ""
+            },
+            productData: [],
+            isloading: false
+        }
+    }
+
+    // SHOW DATA PRODUCT
+    componentDidMount(){
+        this.setState({isLoading: true})
+        let productID = this.props.match.params.id;
+        console.log(productID)
+        axios.get(`http://localhost:2018/products/${productID}`).then((x) => {
+            console.log(x.data[0])
+            // console.log("tes doang")
+            this.setState({
+                productData: x.data[0],
+                isLoading: false
+            }) 
+            console.log(this.state.productData)
+        }).catch((x) => {
+            console.log(x)
+        })
+    }
+
     render(){
         return(
                 
@@ -31,19 +68,19 @@ class ProductDetail extends React.Component {
                     {/* Poduct Gallery */}
                     <div className="col-md-6">
                         <div className="product-gallery"><span className="product-badge text-danger">30% Off</span>
-                        <div className="gallery-wrapper">
+                        {/* <div className="gallery-wrapper">
                             <div className="gallery-item active"><a href="img/shop/single/01.jpg" data-hash="one" data-size="1000x667"></a></div>
                             <div className="gallery-item"><a href="img/shop/single/02.jpg" data-hash="two" data-size="1000x667"></a></div>
                             <div className="gallery-item"><a href="img/shop/single/03.jpg" data-hash="three" data-size="1000x667"></a></div>
                             <div className="gallery-item"><a href="img/shop/single/04.jpg" data-hash="four" data-size="1000x667"></a></div>
                             <div className="gallery-item"><a href="img/shop/single/05.jpg" data-hash="five" data-size="1000x667"></a></div>
-                        </div>
+                        </div> */}
                         <div className="product-carousel owl-carousel">
-                            <div data-hash="one"><img src="img/shop/single/01.jpg" alt="Product"/></div>
-                            <div data-hash="two"><img src="img/shop/single/02.jpg" alt="Product"/></div>
+                            <div data-hash="one"><img src={this.state.productData.picture} alt="Product"/></div>
+                            {/* <div data-hash="two"><img src="img/shop/single/02.jpg" alt="Product"/></div>
                             <div data-hash="three"><img src="img/shop/single/03.jpg" alt="Product"/></div>
                             <div data-hash="four"><img src="img/shop/single/04.jpg" alt="Product"/></div>
-                            <div data-hash="five"><img src="img/shop/single/05.jpg" alt="Product"/></div>
+                            <div data-hash="five"><img src="img/shop/single/05.jpg" alt="Product"/></div> */}
                         </div>
                         <ul className="product-thumbnails">
                             <li className="active"><a href="#one"><img src="img/shop/single/th01.jpg" alt="Product"/></a></li>
@@ -60,32 +97,45 @@ class ProductDetail extends React.Component {
                         <div className="padding-top-2x mt-2 hidden-md-up"></div>
                         <div className="rating-stars"><i className="icon-star filled"></i><i className="icon-star filled"></i><i className="icon-star filled"></i><i className="icon-star filled"></i><i className="icon-star"></i>
                         </div><span className="text-muted align-middle">&nbsp;&nbsp;4.2 | 3 customer reviews</span>
-                        <h2 className="padding-top-1x text-normal">Reebok Royal CL Jogger 2</h2><span className="h2 d-block">
-                        <del className="text-muted text-normal">IDR 680.000</del>&nbsp; IDR 470.000</span>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta voluptatibus quos ea dolore rem, molestias laudantium et explicabo assumenda fugiat deserunt in, facilis laborum excepturi aliquid nobis ipsam deleniti aut? Aliquid sit hic id velit qui fuga nemo suscipit obcaecati. Officia nisi quaerat minus nulla saepe aperiam sint possimus magni veniam provident.</p>
+                        <h2 className="padding-top-1x text-normal">{this.state.productData.productname}</h2><span className="h2 d-block">
+                        <del className="text-muted text-normal"></del>Rp. {this.state.productData.price}</span>
+                        <p>{this.state.productData.productdesc}</p>
                         <div className="row margin-top-1x">
                         <div className="col-sm-4">
                             <div className="form-group">
                             <label for="size">Men's size</label>
-                            <select className="form-control" id="size">
+                            <select className="form-control" id="size" onChange={(e) => {
+                                    let data = this.state.productData;
+                                    data.size = e.target.value;
+                                    this.setState({productData: data})
+                            }}
+                            value={this.state.productData.size}
+                            >
                                 <option>Chooze size</option>
-                                <option>11.5</option>
-                                <option>11</option>
-                                <option>10.5</option>
-                                <option>10</option>
-                                <option>9.5</option>
-                                <option>9</option>
-                                <option>8.5</option>
+                                <option value={38}>38</option>
+                                <option value={39}>39</option>
+                                <option value={40}>40</option>
+                                <option value={41}>41</option>
+                                <option value={42}>42</option>
+                                <option value={43}>43</option>
+                                <option value={44}>44</option>
+                                <option value={45}>45</option>
                             </select>
                             </div>
                         </div>
                         <div className="col-sm-5">
                             <div className="form-group">
                             <label for="color">Choose color</label>
-                            <select className="form-control" id="color">
-                                <option>White/Red/Blue</option>
-                                <option>Black/Orange/Green</option>
-                                <option>Gray/Purple/White</option>
+                            <select className="form-control" id="color" onChange={(e) => {
+                                    let data = this.state.productData;
+                                    data.color = e.target.value;
+                                    this.setState({productData: data})
+                            }}
+                            value={this.state.productData.color}>
+                                <option value={"Dark Choco"}>Dark Choco</option>
+                                <option value={"Black"}>Black</option>
+                                <option value={"Black-White"}>Black-White</option>
+                                <option value={"Navy"}>Navy</option>
                             </select>
                             </div>
                         </div>
@@ -102,7 +152,7 @@ class ProductDetail extends React.Component {
                             </div>
                         </div>
                         </div>
-                        <div className="padding-bottom-1x mb-2"><span className="text-medium">Categories:&nbsp;</span><a className="navi-link" href="">Men’s shoes,</a><a className="navi-link" href=""> Snickers,</a><a className="navi-link" href=""> Sport shoes</a></div>
+                        <div className="padding-bottom-1x mb-2"><span className="text-medium">Categories:&nbsp;</span><a className="navi-link" href="">{this.state.productData.category}</a></div>
                         <hr className="mb-3"/>
                         <div className="d-flex flex-wrap justify-content-between">
                         <div className="entry-share mt-2 mb-2"><span className="text-muted">Share:</span>
