@@ -13,7 +13,7 @@ class addUser extends React.Component {
                 email: "",
                 phoneNumber: "",
                 password: "",
-                state: "",
+                country: "",
                 city: "",
                 zipcode: "",
                 address: "",
@@ -179,11 +179,11 @@ class addUser extends React.Component {
                         </div>
 
                         <div className="form-group col-md-4">
-                        <label for="inputState">State</label>
+                        <label for="inputState">Country</label>
                         <select id="state" className="form-control"
                         onChange={(e) => {
                             let dataUserCopy = this.state.dataUser;
-                            dataUserCopy.state = e.target.value;
+                            dataUserCopy.country = e.target.value;
                             this.setState({
                                 dataUser: dataUserCopy
                             })

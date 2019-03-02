@@ -211,47 +211,50 @@ class Dashboard extends React.Component {
                         </div>
 
                         <div className="col-lg-10 mx-0">
-                        {this.state.styleUser == 'block' && 
-                            <table className="table table-striped" style={{display: this.state.styleUser}}>
-                                <thead className="thead-dark">
+                            {/* display users */}
+                            {this.state.styleUser == 'block' && 
+                                <table className="table table-striped" style={{display: this.state.styleUser}}>
+                                    <thead className="thead-dark">
+                                            <tr>
+                                                <th scope="col">UserID</th>
+                                                <th scope="col">First Name</th>
+                                                <th scope="col">Last Name</th>
+                                                <th scope="col">Email</th>
+                                                <th scope="col">Phone Number</th>
+                                                <th scope="col">State</th>
+                                                <th scope="col">City</th>
+                                                <th scope="col">Profile Picture</th>
+                                                <th scope="col" colSpan="2" className="text-center">Edit / Remove</th>
+                                            </tr>
+                                    </thead>
+                                    <tbody>
+                                        {this.usersTable()}
+                                    </tbody>
+                                </table>
+                            }
+
+                            {/* display products */}
+                            {this.state.styleProduct == 'block' && 
+                                <table className="table table-striped" style={{display: this.state.styleProduct}}>
+                                    <thead className="thead-dark">
                                         <tr>
-                                            <th scope="col">UserID</th>
-                                            <th scope="col">First Name</th>
-                                            <th scope="col">Last Name</th>
-                                            <th scope="col">Email</th>
-                                            <th scope="col">Phone Number</th>
-                                            <th scope="col">State</th>
-                                            <th scope="col">City</th>
-                                            <th scope="col">Profile Picture</th>
+                                            <th scope="col">ProductID</th>
+                                            <th scope="col">Product Name</th>
+                                            <th scope="col">Price</th>
+                                            <th scope="col">Description</th>
+                                            <th scope="col">Size</th>
+                                            <th scope="col">Color</th>
+                                            <th scope="col">Stock</th>
+                                            <th scope="col">Category</th>
+                                            <th scope="col">Picture</th>
                                             <th scope="col" colSpan="2" className="text-center">Edit / Remove</th>
                                         </tr>
-                                </thead>
-                                <tbody>
-                                    {this.usersTable()}
-                                </tbody>
-                            </table>
-                        }
-                        {this.state.styleProduct == 'block' && 
-                            <table className="table table-striped" style={{display: this.state.styleProduct}}>
-                                <thead className="thead-dark">
-                                    <tr>
-                                        <th scope="col">ProductID</th>
-                                        <th scope="col">Product Name</th>
-                                        <th scope="col">Price</th>
-                                        <th scope="col">Description</th>
-                                        <th scope="col">Size</th>
-                                        <th scope="col">Color</th>
-                                        <th scope="col">Stock</th>
-                                        <th scope="col">Category</th>
-                                        <th scope="col">Picture</th>
-                                        <th scope="col" colSpan="2" className="text-center">Edit / Remove</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {this.productsTable()}
-                                </tbody>
-                            </table>
-                        }
+                                    </thead>
+                                    <tbody>
+                                        {this.productsTable()}
+                                    </tbody>
+                                </table>
+                            }
                         </div>
                     </div>
                 </div>

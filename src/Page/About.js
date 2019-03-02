@@ -27,7 +27,7 @@ class About extends React.Component {
                         <div className="col-md-7 text-md-left text-center">
                         <div className="mt-30 hidden-md-up"></div>
                         <h2>Search, Select, Buy Online.</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam id purus at risus pellentesque faucibus a quis eros. In eu fermentum leo. Integer ut eros lacus. Proin ut accumsan leo. Morbi vitae est eget dolor consequat aliquam eget quis dolor. Mauris rutrum fermentum erat, at euismod lorem pharetra nec. Duis erat lectus, ultrices euismod sagittis at, pharetra eu nisl. Phasellus id ante at velit tincidunt hendrerit. Aenean dolor dolor, tristique nec placerat nec.</p><a className="text-medium text-decoration-none" href="shop-grid-ls.html">View Products&nbsp;<i className="icon-arrow-right"></i></a>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam id purus at risus pellentesque faucibus a quis eros. In eu fermentum leo. Integer ut eros lacus. Proin ut accumsan leo. Morbi vitae est eget dolor consequat aliquam eget quis dolor. Mauris rutrum fermentum erat, at euismod lorem pharetra nec. Duis erat lectus, ultrices euismod sagittis at, pharetra eu nisl. Phasellus id ante at velit tincidunt hendrerit. Aenean dolor dolor, tristique nec placerat nec.</p><a className="text-medium text-decoration-none" href="/shop">View Products&nbsp;<i className="icon-arrow-right"></i></a>
                         </div>
                     </div>
                     <hr/>
@@ -36,7 +36,7 @@ class About extends React.Component {
                         <div className="col-md-7 order-md-1 text-md-left text-center">
                         <div className="mt-30 hidden-md-up"></div>
                         <h2>Fast Delivery Worldwide.</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam id purus at risus pellentesque faucibus a quis eros. In eu fermentum leo. Integer ut eros lacus. Proin ut accumsan leo. Morbi vitae est eget dolor consequat aliquam eget quis dolor. Mauris rutrum fermentum erat, at euismod lorem pharetra nec. Duis erat lectus, ultrices euismod sagittis at, pharetra eu nisl. Phasellus id ante at velit tincidunt hendrerit. Aenean dolor dolor, tristique nec placerat nec.</p><a className="text-medium text-decoration-none" href="">Shipping Details&nbsp;<i className="icon-arrow-right"></i></a>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam id purus at risus pellentesque faucibus a quis eros. In eu fermentum leo. Integer ut eros lacus. Proin ut accumsan leo. Morbi vitae est eget dolor consequat aliquam eget quis dolor. Mauris rutrum fermentum erat, at euismod lorem pharetra nec. Duis erat lectus, ultrices euismod sagittis at, pharetra eu nisl. Phasellus id ante at velit tincidunt hendrerit. Aenean dolor dolor, tristique nec placerat nec.</p><a className="text-medium text-decoration-none" href="/checkout-shipping">Shipping Details&nbsp;<i className="icon-arrow-right"></i></a>
                         </div>
                     </div>
                     <hr/>

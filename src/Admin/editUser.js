@@ -12,10 +12,6 @@ class editUser extends React.Component {
                 lastname: "",
                 email: "",
                 phoneNumber: "",
-                password: "",
-                state: "",
-                city: "",
-                zipcode: "",
                 profilePicture: "",
                 files: ""
             },
@@ -148,7 +144,7 @@ class editUser extends React.Component {
                             this.setState({dataUser: data})
                         }}
                         value={this.state.dataUser.address}
-                        />
+                        disabled/>
                     </div>
 
                     <div className="form-group">
@@ -173,19 +169,19 @@ class editUser extends React.Component {
                             this.setState({dataUser: data})
                         }}
                         value={this.state.dataUser.city}
-                        />
+                        disabled/>
                         </div>
 
                         <div className="form-group col-md-4">
-                        <label for="inputState">State</label>
+                        <label for="inputState">Country</label>
                         <select id="state" className="form-control"
                         onChange={(e) => {
                             let data = this.state.dataUser;
-                            data.state = e.target.value;
+                            data.country = e.target.value;
                             this.setState({dataUser: data})
                         }}
-                        value={this.state.dataUser.state}
-                        >
+                        value={this.state.dataUser.country}
+                        disabled>
                             <option selected>Choose...</option>
                             <option>Indonesia</option>
                         </select>
@@ -200,7 +196,7 @@ class editUser extends React.Component {
                             this.setState({dataUser: data})
                         }}
                         value={this.state.dataUser.zipcode}
-                        />
+                        disabled/>
                         </div>
                     </div>
 

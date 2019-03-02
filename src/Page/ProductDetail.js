@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 class ProductDetail extends React.Component {
 
@@ -16,7 +17,8 @@ class ProductDetail extends React.Component {
                 picture: ""
             },
             productData: [],
-            isloading: false
+            isloading: false,
+            quantity: 1 
         }
     }
 
@@ -24,7 +26,7 @@ class ProductDetail extends React.Component {
     componentDidMount(){
         this.setState({isLoading: true})
         let productID = this.props.match.params.id;
-        console.log(productID)
+        // console.log(productID)
         axios.get(`http://localhost:2018/products/${productID}`).then((x) => {
             console.log(x.data[0])
             // console.log("tes doang")
@@ -32,15 +34,60 @@ class ProductDetail extends React.Component {
                 productData: x.data[0],
                 isLoading: false
             }) 
-            console.log(this.state.productData)
+            // console.log(this.state.productData.productID)
         }).catch((x) => {
             console.log(x)
         })
     }
+    
+    // add data carts
+    addCart = () => {
+        axios.post('http://localhost:2018/cart', {
+            userID: this.props.userID,
+            productID: this.state.productData.productID,
+            quantity: this.state.quantity,
+            totalPrice: this.state.quantity * this.state.productData.price
+        }).then((x) => {
+            console.log(x)
+        }).catch(() => {
+            console.log("Failed Add to cart!")
+        })
+    }
+
+    // modal cart
+    displayModal() {
+        return (
+            <div className="modal fade" id="modalDefault" tabindex="-1" role="dialog">
+                <div className="modal-dialog" role="document">
+                    <div className="modal-content">
+                    <div className="modal-header">
+                        <h4 className="modal-title" style={{marginLeft: "140px"}}>Berhasil Ditambahkan</h4>
+                        <button className="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div className="modal-body">
+                        <div className="card">
+                            <div className="row p-2">
+                                <div className="col-lg-3">
+                                    <img src={this.state.productData.picture} style={{width: 60, height: 60}} />
+                                </div>
+                                <div className="col-lg-9 mt-3">
+                                    {this.state.productData.productname}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="modal-footer">
+                        {/* <button class="btn btn-outline-secondary btn-sm" type="button" data-dismiss="modal">Close</button> */}
+                        <button onClick={() => {window.location.href ='/cart'}} class="btn btn-primary btn-sm" type="button">View cart</button>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        )
+    }
 
     render(){
         return(
-                
             <div style={{position: "relative", top: "120px", borderTop: "1px solid #e1e7ec"}}>
                 {/* Page Title */}
                 <div className="page-title">
@@ -141,14 +188,52 @@ class ProductDetail extends React.Component {
                         </div>
                         <div className="col-sm-3">
                             <div className="form-group">
-                            <label for="quantity">Quantity</label>
-                            <select className="form-control" id="quantity">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                            </select>
+                                <label for="quantity">Quantity</label>
+                                <div id="quantity">
+                                    <button type="button" style={{ background: "none", border: "none", cursor: "pointer" }} onClick={(e) => {
+                                            if (this.state.quantity <= 1) {
+                                                this.setState({
+                                                    quantity: 1
+                                                })
+                                            }
+                                            else {
+                                                this.setState({
+                                                    quantity: parseInt(this.state.quantity) - 1
+                                                })
+                                            }
+                                    }}><i class="fas fa-minus-circle fa-lg"></i></button>
+
+                                    <input className="text-center" type="text" value={this.state.quantity} style={{ border: "none", borderBottom: "1px solid black", width: "3rem" }}
+                                        onKeyPress={(e) => {
+                                            var char = String.fromCharCode(e.which); if (!(/[0-9]/.test(char))) {
+                                                e.preventDefault();
+                                            }
+                                        }} onChange={(e) => {
+                                            if (this.state.quantity < 1) {
+                                                this.setState({
+                                                    quantity: 1
+                                                })
+                                            }
+                                            else {
+                                                this.setState({ quantity: e.target.value })
+                                            }
+
+                                        }}
+                                        onKeyDown={(e) => {
+                                            if (e.key == 0 && this.state.quantity == "") {
+                                                e.preventDefault();
+                                                this.setState({
+                                                    quantity: 1
+                                                })
+                                            }
+                                    }} />
+
+                                    <button type="button" style={{ background: "none", border: "none", cursor: "pointer" }} onClick={() => {
+                                        this.setState({
+                                            quantity: parseInt(this.state.quantity) + 1
+                                        })
+                                    }}><i class="fas fa-plus-circle fa-lg"></i></button>
+                                </div>
                             </div>
                         </div>
                         </div>
@@ -160,7 +245,9 @@ class ProductDetail extends React.Component {
                         </div>
                         <div className="sp-buttons mt-2 mb-2" style={{paddingBottom: "80px"}}>
                         <button className="btn btn-outline-secondary btn-sm btn-wishlist" data-toggle="tooltip" title="Whishlist"><i className="icon-heart"></i></button>
-                        <button className="btn btn-primary" data-toast data-toast-type="success" data-toast-position="topRight" data-toast-icon="icon-circle-check" data-toast-title="Product" data-toast-message="successfuly added to cart!"><i className="icon-bag"></i> Add to Cart</button>
+                        <button onClick={this.addCart} className="btn btn-primary" data-toast data-toast-type="success" data-toast-position="topRight" data-toast-icon="icon-circle-check" data-toast-title="Product" data-toast-message="successfuly added to cart!" data-toggle="modal" data-target="#modalDefault"><i className="icon-bag"></i> Add to Cart</button>
+                        
+                        {this.displayModal()}
                         </div>
                         </div>
                     </div>

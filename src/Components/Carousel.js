@@ -11,13 +11,26 @@ class Carousel extends React.Component {
                     <div className="item">
                         <div className="container padding-top-3x">
                         <div className="row justify-content-center align-items-center">
-                            <div className="col-lg-5 col-md-6 padding-bottom-2x text-md-left text-center">
-                            <div className="from-bottom"><img className="d-inline-block w-150 mb-4" src="img/hero-slider/logo02.png" alt="Puma"/>
-                                <div className="h2 text-body text-normal mb-2 pt-1">Puma Backpacks Collection</div>
-                                <div className="h2 text-body text-normal mb-4 pb-1">starting at <span className="text-bold">IDR 500.000</span></div>
-                            </div><a className="btn btn-primary scale-up delay-1" href="shop-grid-ls.html">View Offers</a>
+                            <div className="col-lg-5 col-md-6 padding-bottom-3x text-md-left text-center">
+                            <div className="from-bottom"><img className="d-inline-block w-150 mb-4" src="img/hero-slider/04.png" alt="Nikelogo"/>
+                                <div className="h2 text-body text-normal mb-2 pt-1">Nike Air VaporMax 2019</div>
+                                <div className="h2 text-body text-normal mb-4 pb-1">starting at <span className="text-bold">IDR 2.500.000</span></div>
+                            </div><a className="btn btn-primary scale-up delay-1" href="/shop">Shop Now</a>
                             </div>
-                            <div className="col-md-6 padding-bottom-2x mb-3"><img className="d-block mx-auto" src="img/hero-slider/02.png" alt="Puma Backpack"/></div>
+                            <div className="col-md-6 padding-bottom-2x mb-3"><img className="d-block mx-auto" src="img/hero-slider/Nike01.png" alt="Nike"/></div>
+                        </div>
+                        </div>
+                    </div>
+                    <div className="item">
+                        <div className="container padding-top-3x">
+                        <div className="row justify-content-center align-items-center">
+                            <div className="col-lg-5 col-md-6 padding-bottom-3x text-md-left text-center">
+                            <div className="from-bottom"><img className="d-inline-block w-150 mb-0" src="img/hero-slider/05.png" alt="adiadaslogo"/>
+                                <div className="h2 text-body text-normal mb-2 pt-1">Yeezy Boost 700 Mauve</div>
+                                <div className="h2 text-body text-normal mb-4 pb-1">for only <span className="text-bold">IDR 2.245.000</span></div>
+                            </div><a className="btn btn-primary scale-up delay-1" href="/shop">Shop Now</a>
+                            </div>
+                            <div className="col-md-6 padding-bottom-2x mb-3" style={{paddingTop: "35px"}}><img className="d-block mx-auto" src="img/hero-slider/adidas.png" alt="adidas"/></div>
                         </div>
                         </div>
                     </div>
@@ -25,25 +38,12 @@ class Carousel extends React.Component {
                         <div className="container padding-top-3x">
                         <div className="row justify-content-center align-items-center">
                             <div className="col-lg-5 col-md-6 padding-bottom-2x text-md-left text-center">
-                            <div className="from-bottom"><img className="d-inline-block w-200 mb-4" src="img/hero-slider/logo01.png" alt="Converse"/>
-                                <div className="h2 text-body text-normal mb-2 pt-1">Chuck Taylor All Star II</div>
-                                <div className="h2 text-body text-normal mb-4 pb-1">for only <span className="text-bold">IDR 1,245,000</span></div>
-                            </div><a className="btn btn-primary scale-up delay-1" href="shop-single.html">Shop Now</a>
+                            <div className="from-bottom"><img className="d-inline-block mb-4" src="img/hero-slider/06.png" style={{width: "125px"}} alt="newbalancelogo"/>
+                                <div className="h2 text-body text-normal mb-2 pt-1">New Balance 247 Flavors</div>
+                                <div className="h2 text-body text-normal mb-4 pb-1">for only <span className="text-bold">IDR 799.000</span></div>
+                            </div><a className="btn btn-primary scale-up delay-1" href="/shop">Shop Now</a>
                             </div>
-                            <div className="col-md-6 padding-bottom-2x mb-3"><img className="d-block mx-auto" src="img/hero-slider/01.png" alt="Chuck Taylor All Star II"/></div>
-                        </div>
-                        </div>
-                    </div>
-                    <div className="item">
-                        <div className="container padding-top-3x">
-                        <div className="row justify-content-center align-items-center">
-                            <div className="col-lg-5 col-md-6 padding-bottom-2x text-md-left text-center">
-                            <div className="from-bottom"><img className="d-inline-block mb-4" src="img/hero-slider/logo03.png" style={{width: "125px"}} alt="Motorola"/>
-                                <div className="h2 text-body text-normal mb-2 pt-1">Smart Watch Moto 360 2nd</div>
-                                <div className="h2 text-body text-normal mb-4 pb-1">for only <span className="text-bold">IDR 399.000</span></div>
-                            </div><a className="btn btn-primary scale-up delay-1" href="shop-single.html">Shop Now</a>
-                            </div>
-                            <div className="col-md-6 padding-bottom-2x mb-3"><img className="d-block mx-auto" src="img/hero-slider/03.png" alt="Moto 360"/></div>
+                            <div className="col-md-6 padding-bottom-2x mb-3"><img className="d-block mx-auto" src="img/hero-slider/newbalance01.png" alt="newbalance"/></div>
                         </div>
                         </div>
                     </div>

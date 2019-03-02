@@ -7,8 +7,62 @@ class Navbar extends React.Component {
     constructor(){
         super();
         this.state = {
-            profilePicture: ""
+            profilePicture: "",
+            quantity: 1,
+            dataCart: "",
+            isLoading: false
         }
+    }
+
+    refreshCart = () => {
+        this.setState({isLoading: true})
+        // ambil data carts
+        var userID = localStorage.getItem("userid");
+        axios.get(`http://localhost:2018/cart/${userID}`)
+        .then((x) => {
+            console.log(x.data)
+            if (x.data.length > 0) {
+                this.setState({
+                    dataCart: x.data,
+                    isLoading: false
+                })
+            }
+            else {
+                this.setState({
+                    dataCart: "",
+                    isLoading: false
+                })
+            }
+        })
+        .catch((x) => {
+            console.log('Error')
+        })
+    }
+
+    // DELETE data cart
+    removeCart = (cartID) => {
+        axios.delete(`http://localhost:2018/cart/${cartID}`).then(() => {
+            this.refreshCart()
+        });
+        alert('Cart deleted!')
+        
+    }
+
+    // 
+    runTotal = () => {
+        this.props.sendTotal(this.totalPrice());
+        setTimeout(() => {
+            window.location.href = "/checkout-address"
+        }, 1500);
+    }
+
+    // fungsi untuk menghitung totalPrice di cart
+    totalPrice(){
+        var total = 0;
+        for(var i = 0; i<this.state.dataCart.length; i++){
+            total+= this.state.dataCart[i].totalPrice
+        }
+        return total;
     }
 
     // SHOW DATA USER
@@ -24,6 +78,19 @@ class Navbar extends React.Component {
             })
         }).catch(() => {
             console.log("Failed!")
+        })
+
+        // buat reload data cart
+        this.refreshCart()
+    }
+
+    dataCart() {
+        return this.state.dataCart.map((val, i) => {
+            return (
+                <div className="dropdown-product-item"><span className="dropdown-product-remove"><i className="icon-cross" onClick={() => {this.removeCart(val.cartID)}}></i></span><a className="dropdown-product-thumb" href="/cart"><img src={val.picture} alt="Product"/></a>
+                    <div className="dropdown-product-info text-capitalize"><a className="dropdown-product-title" href="/cart">{val.productname}</a><span className="dropdown-product-details">{val.quantity} x {parseInt(val.price).toLocaleString()}</span></div>
+                </div>
+            )
         })
     }
 
@@ -73,9 +140,9 @@ class Navbar extends React.Component {
                         <li className="nav-item">
                             <a href='/shop' className="nav-link text-uppercase">Shop</a>
                         </li>
-                        <li className="nav-item">
+                        {/* <li className="nav-item">
                             <Link to="/checkout-address"><a className="nav-link">Payment</a></Link>
-                        </li>
+                        </li> */}
                         <li className="nav-item dropdown">
                             <a className="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Category
@@ -116,6 +183,8 @@ class Navbar extends React.Component {
                                 <div className="search"><i className="icon-search"></i></div>
 
                                 {/* Login Button */}
+
+                                {/* kalo user lagi login tampilkan button logout */}
                                 {localStorage.getItem("username") ?
                                 <div className="account text-capitalize"><i className="icon-head"></i>
                                     <ul className="toolbar-dropdown">
@@ -126,14 +195,17 @@ class Navbar extends React.Component {
                                         <h6 className="user-name">{localStorage.getItem("username")}</h6><span className="text-xs text-muted"></span>
                                         </div>
                                     </li>
-                                        <li><a className="text-capitalize" href="">My Profile</a></li>
+                                        <li><a className="text-capitalize" href="/myprofile">My Profile</a></li>
+                                        <li><a className="text-capitalize" href="/myorders">My Orders</a></li>
                                     <li className="sub-menu-separator"></li>
                                     <li onClick={() => {
                                         localStorage.removeItem("username");
+                                        localStorage.removeItem("userid");
                                         window.location.href = "/"
                                     }}><a className="text-capitalize"><i className="icon-unlock"></i>Logout</a></li>
                                     </ul>
                                 </div>
+                                // kalo user logout tampilkan button login
                                 :   <Link to="/login"><div className="account text-capitalize"><i className="icon-head"></i>
                                         <ul className="toolbar-dropdown">
                                             <li><a className="text-capitalize" href="/login"><i className="icon-lock"></i>Login</a></li>
@@ -141,24 +213,20 @@ class Navbar extends React.Component {
                                     </div></Link>
                                 }
 
-                                <div className="cart"><a href="/cart"></a><i className="icon-bag"></i><span className="count">3</span><span className="subtotal">IDR 800K</span>
+                                {/* Keranjang */}
+                                <div className="cart"><i className="icon-bag"></i><span className="count">{this.state.dataCart ? this.state.dataCart.length : 0}</span><span className="subtotal">IDR {this.totalPrice().toLocaleString()}</span>
                                     <div className="toolbar-dropdown">
-                                    <div className="dropdown-product-item"><span className="dropdown-product-remove"><i className="icon-cross"></i></span><a className="dropdown-product-thumb" href="shop-single.html"><img src="img/cart-dropdown/01.jpg" alt="Product"/></a>
-                                        <div className="dropdown-product-info text-capitalize"><a className="dropdown-product-title" href="shop-single.html">Unionbay Park</a><span className="dropdown-product-details">1 x 200K</span></div>
-                                    </div>
-                                    <div className="dropdown-product-item text-capitalize"><span className="dropdown-product-remove"><i className="icon-cross"></i></span><a className="dropdown-product-thumb" href="shop-single.html"><img src="img/cart-dropdown/02.jpg" alt="Product"/></a>
-                                        <div className="dropdown-product-info"><a className="dropdown-product-title" href="shop-single.html">Daily Fabric Cap</a><span className="dropdown-product-details">2 x 200K</span></div>
-                                    </div>
-                                    <div className="dropdown-product-item text-capitalize"><span className="dropdown-product-remove"><i className="icon-cross"></i></span><a className="dropdown-product-thumb" href="shop-single.html"><img src="img/cart-dropdown/03.jpg" alt="Product"/></a>
-                                        <div className="dropdown-product-info"><a className="dropdown-product-title" href="shop-single.html">Haan Crossbody</a><span className="dropdown-product-details">1 x 200K</span></div>
-                                    </div>
+                                    
+                                    {/* dataCart nya load dari database trus baru di mapping dan di tampilin */}
+                                    {this.state.dataCart ? this.dataCart() : ""}
+
                                     <div className="toolbar-dropdown-group">
                                         <div className="column"><span className="text-lg">Total:</span></div>
-                                        <div className="column text-right"><span className="text-lg text-medium">IDR 800K&nbsp;</span></div>
+                                        <div className="column text-right"><span className="text-lg text-medium text-capitalize">Rp. {this.totalPrice().toLocaleString()}&nbsp;</span></div>
                                     </div>
                                     <div className="toolbar-dropdown-group">
-                                        <div className="column"><a href="/cart" className="btn btn-sm btn-block btn-secondary">View Cart</a></div>
-                                        <div className="column"><a href="/checkout-address" className="btn btn-sm btn-block btn-success">Checkout</a></div>
+                                    <div className="column"><a className="btn btn-sm btn-block btn-secondary" href="/cart">View Cart</a></div>
+                                        <div className="column"><a className="btn btn-sm btn-block btn-success" href="/checkout-address">Checkout</a></div>
                                     </div>
                                     </div>
                                 </div>

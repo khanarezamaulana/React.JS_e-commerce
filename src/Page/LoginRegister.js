@@ -24,6 +24,8 @@ class LoginRegister extends React.Component {
 
     signup = (e) => {
         e.preventDefault();
+        
+        // untuk konfirmasi password, jika password tidak sama maka signup gagal
         if(this.state.dataUser.password != this.state.confirmPassword){
             alert("Password dont match!")
         }
@@ -37,7 +39,8 @@ class LoginRegister extends React.Component {
                 alert("Akun sudah terdaftar!")
             }
             else {
-                alert("SignUp Successfully!")
+                alert("SignUp Successfully, you have to login!")
+                window.location.href = "/login"
             }
 
         }).catch(() => {
@@ -65,6 +68,7 @@ class LoginRegister extends React.Component {
                 alert("Login Sukses!")
             // locStore
             localStorage.setItem("username", this.state.username);
+            localStorage.setItem("userid", x.data.userID);
             // this.props.history.push("/shop")
             window.location.href = "/shop"
             }
@@ -93,7 +97,7 @@ class LoginRegister extends React.Component {
                         </ul>
                         </div>
                     </div>
-                    </div>
+                </div>
 
                     {/* Page Content/Login */}
                     <div className="container padding-bottom-3x mb-2">
@@ -182,7 +186,7 @@ class LoginRegister extends React.Component {
                                                 dataUser: data
                                             })
                                         }}
-                                    placeholder="Enter email" required/>
+                                    placeholder="Email" required/>
                                 </div>
                             </div>
 
@@ -199,7 +203,7 @@ class LoginRegister extends React.Component {
                                                 dataUser: data
                                             })
                                         }}
-                                    placeholder="Enter username" required/>
+                                    placeholder="Username" required/>
                                 </div>
                             </div>
 
@@ -248,7 +252,7 @@ class LoginRegister extends React.Component {
                                                 confirmPassword: e.target.value
                                             })
                                         }}
-                                    placeholder="Confirm password" required/>
+                                    placeholder="Confirm password" onKeyDown={this.handleEnter} required/>
                                 </div>
                             </div>
 
