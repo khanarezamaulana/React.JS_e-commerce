@@ -18,8 +18,9 @@ app.use(routeRO);
 
 app.use(cors());
 app.use(upload());
-app.use('/file', express.static('storage'))
+app.use('/file', express.static('storage'));
 app.use('/fileproduct', express.static('storageProducts'));
+app.use('/filereceipt', express.static('storageReceipt'));
 
 // route 
 app.get('/', (req, res)=>{

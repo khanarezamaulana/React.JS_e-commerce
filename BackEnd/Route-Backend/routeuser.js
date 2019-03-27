@@ -200,7 +200,7 @@ router.put('/address/:id', (req, res) => {
     var country = req.body.country;
     var province = req.body.province;
     var city = req.body.city;
-    var zipcode = req.body.postal_code;
+    var zipcode = req.body.zipcode;
     var address = req.body.address;
 
     // update data address
@@ -233,17 +233,17 @@ router.post('/transaction', (req, res) => {
     console.log(req.body);
     var sql = 'insert into transaction set ?';
     var dataTransaction = {
-            firstname: req.body.firstname,
-            lastname: req.body.lastname, 
-            email: req.body.email,
-            phoneNumber: req.body.phoneNumber,
-            country: req.body.country,
-            province: req.body.province,
-            city: req.body.city,
-            zipcode: req.body.zipcode,
-            address: req.body.address,
-            subtotal: req.body.subtotal,
-            status: req.body.status
+        firstname: req.body.firstname,
+        lastname: req.body.lastname, 
+        email: req.body.email,
+        phoneNumber: req.body.phoneNumber,
+        country: req.body.country,
+        province: req.body.province,
+        city: req.body.city,
+        zipcode: req.body.zipcode,
+        address: req.body.address,
+        subtotal: req.body.subtotal,
+        status: req.body.status
     }
     db.query(sql, req.body, (err, result) => {
         if(err) {
@@ -317,11 +317,49 @@ router.post('/transaction', (req, res) => {
     })
 })
 
-//
-router.get('/transaction', (req,res) => {
-    var sql = `select * from transaction `
+// router untuk get data table transaction, orders dan products dengan inner join
+router.get('/ordersdata', (req, res) => {
+    var sql = "SELECT * FROM transaction t INNER JOIN orders o ON t.transactionID = o.invoice INNER JOIN products p ON p.productID = o.productID";
+    db.query(sql, (err, result) => {
+        if(err) {
+            throw err;
+        }
+        else {
+            console.log(result)
+            res.send(result)
+        }
+    })
 })
 
+// router untuk get data table transaction, orders dan products by userID dengan inner join
+router.get('/ordersdata/:id', (req, res) => {
+    var sql = `SELECT * FROM transaction t INNER JOIN orders o ON t.transactionID = o.invoice INNER JOIN products p ON p.productID = o.productID WHERE userID = "${req.params.id}"`;
+    db.query(sql, (err, result) => {
+        if(err) {
+            throw err;
+        }
+        else {
+            console.log(result)
+            res.send(result)
+        }
+    })
+})
+
+// router untuk get table transaction, orders dan products by transactionID dengan inner join
+router.get('/ordersdetail/:id', (req, res) => {
+    var sql = `SELECT * FROM transaction t INNER JOIN orders o ON t.transactionID = o.invoice INNER JOIN products p ON p.productID = o.productID WHERE transactionID = "${req.params.id}"`;
+    db.query(sql, (err, result) => {
+        if(err) {
+            throw err;
+        }
+        else {
+            console.log(result)
+            res.send(result)
+        }
+    })
+})
+
+// router untuk get data table transaction dan table orders dengan inner join
 router.get('/transaction/:userID', (req, res) => {
     var sql = `select * from transaction t inner join orders o on t.transactionID = o.invoice where o.userID = '${req.params.userID}'`;
     db.query(sql, (err, result) => {
@@ -340,18 +378,43 @@ router.post("/order", (req, res) => {
     let sql = `insert into orders set ?`
     db.query(sql, req.body, (err, result) => {
         console.log(result);
-
-        
         res.send(result);
         
     })
 })
 
+// route update receipt table transaction 
+router.post("/receipt", (req, res) => {
+    let bankname = req.body.namaBank;
+    let nameofbankaccount = req.body.pemilikRekening;
+    let numberofaccount = req.body.nomorRekening;
+    let amountoftransfer = req.body.jumlahTransfer;
+    let receipt = "default"
+    let sql = `UPDATE transaction SET receipt = '${receipt}', bankname = '${bankname}', nameofbankaccount = '${nameofbankaccount}', numberofaccount = '${numberofaccount}', amountoftransfer = '${amountoftransfer}' where transactionID = '${req.body.transactionID}'`;
+    db.query(sql, (err, result) => {
+        if(err) {
+            throw err;
+        }
+        else {
+            console.log(result);
+            
+            // untuk dapetin id yang mau dipost receiptnya
+            transactionIDTemp = result.insertId;
+            console.log(transactionIDTemp);
+            res.send({"transactionID": transactionIDTemp});
+            }
+    })
+})
 
 // untuk validasi pembayaran
 router.post("/pay", (req, res) => {
-    console.log(req.body);
-    console.log('gshshsh')
+    // console.log(req.body);
+    // console.log('gshshsh')
+    let bankname = req.body.namaBank;
+    let nameofbankaccount = req.body.pemilikRekening;
+    let numberofaccount = req.body.nomorRekening;
+    let amountoftransfer = req.body.jumlahTransfer;
+    let receipt = "default"
     let sql = `SELECT * FROM transaction where transactionID = '${req.body.transactionID}'`;
     let query = db.query(sql, (err, result) => {
         if (err) {
@@ -369,11 +432,20 @@ router.post("/pay", (req, res) => {
                     });
                 }
                 else {
-                    let sql = `UPDATE transaction SET status = "Paid" where transactionID = '${req.body.transactionID}'`;
-                    let query = db.query(sql, (err, response) => {
-                        res.send({ "status": "Success" });
-                    })
+                    let sql = `UPDATE transaction SET status = "Paid", receipt = '${receipt}', bankname = '${bankname}', nameofbankaccount = '${nameofbankaccount}', numberofaccount = '${numberofaccount}', amountoftransfer = '${amountoftransfer}' where transactionID = '${req.body.transactionID}'`;
+                    db.query(sql, (err, response) => {
+                        if(err){
+                            throw err;
+                        }
+                        else {
+                            res.send({ "status": "Success" });
 
+                            // untuk dapetin id yang mau dipost receiptnya
+                            // transactionIDTemp = result.insertId;
+                            // console.log(transactionIDTemp);
+                            // res.send({"transactionID": transactionIDTemp});
+                        }
+                    })
                 }
             }
         }

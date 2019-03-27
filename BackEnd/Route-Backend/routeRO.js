@@ -49,7 +49,8 @@ router.get('/shipping/:city_id', (req, res) => {
 // route GET province berdasarkan province_id dari API Raja Ongkir
 router.get('/province/:province_id', (req, res) => {
     console.log(req.params.province_id)
-    RajaOngkir.getProvinces(params).then((result) => {
+    var id = req.params.province_id
+    RajaOngkir.getProvince(id).then((result) => {
         console.log(result)
         res.send(result)
     }).catch((err) => {
@@ -60,6 +61,7 @@ router.get('/province/:province_id', (req, res) => {
 // route GET city_id berdasarkan city_id dari API Raja Ongkir
 router.get('/city/:city_id', (req, res) => {
     console.log(req.params.city_id)
+    console.log('cityid')
     RajaOngkir.getCity(req.params.city_id).then((result) => {
         console.log(result)
         res.send(result)

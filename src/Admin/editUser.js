@@ -113,7 +113,7 @@ class editUser extends React.Component {
                     <div className="form-row">
                         <div className="form-group col-md-12">
                         <label for="inputEmail4">Email</label>
-                        <input type="email" id="email" className="form-control" id="inputEmail4" 
+                        <input type="email" id="email" className="form-control" 
                         onChange={(e) => {
                             let data = this.state.dataUser;
                             data.email = e.target.value;
@@ -137,7 +137,7 @@ class editUser extends React.Component {
 
                     <div className="form-group">
                         <label for="inputAddress">Address</label>
-                        <input type="text" id="address" className="form-control" id="inputAddress" 
+                        <input type="text" id="address" className="form-control"
                         onChange={(e) => {
                             let data = this.state.dataUser;
                             data.address = e.target.value;
@@ -149,7 +149,7 @@ class editUser extends React.Component {
 
                     <div className="form-group">
                         <label for="phoneNumber">Phone Number</label>
-                        <input type="text" id="phoneNumber" className="form-control" id="phoneNumber" 
+                        <input type="text" id="phoneNumber" className="form-control"
                         onChange={(e) => {
                             let data = this.state.dataUser;
                             data.phoneNumber = e.target.value;
@@ -162,7 +162,7 @@ class editUser extends React.Component {
                     <div className="form-row">
                         <div className="form-group col-md-6">
                         <label for="inputCity">City</label>
-                        <input type="text" id="city" className="form-control" id="inputCity"
+                        <input type="text" id="city" className="form-control"
                         onChange={(e) => {
                             let data = this.state.dataUser;
                             data.city = e.target.value;
@@ -189,7 +189,7 @@ class editUser extends React.Component {
 
                         <div className="form-group col-md-2">
                         <label for="inputZip">Zip Code</label>
-                        <input type="text" id="zipcode" className="form-control" id="inputZip"
+                        <input type="text" id="zipcode" className="form-control"
                         onChange={(e) => {
                             let data = this.state.dataUser;
                             data.zipcode = e.target.value;

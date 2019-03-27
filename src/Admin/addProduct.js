@@ -26,7 +26,7 @@ class addProduct extends React.Component {
         console.log(this.state.dataProduct.files)
         // console.log(this.state.files)
         
-        // axios post data product dan axios upload picture Product
+        // axios post data product
         axios.post('http://localhost:2018/products', this.state.dataProduct).then((x) => {
             console.log(x.data.productID);
             var formData = new FormData();
@@ -39,6 +39,7 @@ class addProduct extends React.Component {
                 headers: {'Content-Type': 'multipart/form-data'}
             };
 
+            // axios post upload picture Product
             axios.post('http://localhost:2018/productsupload', formData, setting).then((y) => {
                 console.log(y);
                 alert("Uplaod Success!")

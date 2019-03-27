@@ -12,7 +12,7 @@ class Dashboard extends React.Component {
                 lastname: "",
                 email: "",
                 phoneNumber: "",
-                state: "",
+                country: "",
                 city: "",
                 address: "",
                 profilePicture: ""
@@ -109,7 +109,7 @@ class Dashboard extends React.Component {
                     <td>{value.lastname}</td>
                     <td>{value.email}</td>
                     <td>{value.phoneNumber}</td>
-                    <td>{value.state}</td>
+                    <td>{value.province}</td>
                     <td>{value.city}</td>
                     <td>{<img src={value.profilePicture} style={{ width: 150, height: "auto" }} />}</td>
                     <td><Link to={`/edituser/${value.userID}`}><button type="button" className="btn btn-primary">Edit</button></Link></td>
@@ -203,7 +203,9 @@ class Dashboard extends React.Component {
 
                                             {/* Button Add Product */}
                                             <a href="/addproduct" type="button" className="list-group-item d-inline-block " data-parent="#sidebar" style={{cursor: "pointer"}}><i class="fas fa-plus-circle"></i> <span class="d-none d-md-inline">Add Product</span></a>
-                                        
+                                            
+                                            {/* Button Add Product */}
+                                            <a href="/ordersdata" type="button" className="list-group-item d-inline-block " data-parent="#sidebar" style={{cursor: "pointer"}}><i class="far fa-chart-bar"></i> <span class="d-none d-md-inline">Orders Data</span></a>
                                         </div>
                                     </div>
                                 </div>
@@ -221,7 +223,7 @@ class Dashboard extends React.Component {
                                                 <th scope="col">Last Name</th>
                                                 <th scope="col">Email</th>
                                                 <th scope="col">Phone Number</th>
-                                                <th scope="col">State</th>
+                                                <th scope="col">Province</th>
                                                 <th scope="col">City</th>
                                                 <th scope="col">Profile Picture</th>
                                                 <th scope="col" colSpan="2" className="text-center">Edit / Remove</th>

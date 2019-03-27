@@ -1,6 +1,5 @@
 import React, { useReducer } from 'react';
 import axios from 'axios';
-import OrderSummary from '../Components/OrderSummary';
 
 class CheckoutAddress extends React.Component {
 
@@ -45,6 +44,9 @@ class CheckoutAddress extends React.Component {
         // get data user from database
         axios.get(`http://localhost:2018/users/${userID}`).then((x) => {
             console.log(x.data[0])
+            console.log('wkwkw')
+            // get ongkir berdasarkan city_id
+            // this.getOngkir(x.data[0].city);
             this.setState({
                 province_id: x.data[0].province,
                 city_id: x.data[0].city,
@@ -52,13 +54,6 @@ class CheckoutAddress extends React.Component {
                 isLoading: false
             })
 
-            // untuk dapetin zipcode berdasarkan city user
-            // axios.get(`http://localhost:2018/city/${x.data[0].city}`).then((x) => {
-            // console.log(x.data.rajaongkir.results.postal_code)
-            //     this.setState({
-            //         postal_code: x.data.rajaongkir.results.postal_code
-            //     });
-            // })
         }).catch((x) => {
             console.log(x)
         })
@@ -72,24 +67,24 @@ class CheckoutAddress extends React.Component {
         })
 
         // get province API Raja Ongkir from route backend
-        // axios.get('http://localhost:2018/province').then((x) => {
-        //     console.log(x.data.rajaongkir.results)
-        //     this.setState({
-        //         provinces: x.data.rajaongkir.results
-        //     })
-        // }).catch((err) => {
-        //     console.log(err)
-        // })
+        axios.get('http://localhost:2018/province').then((x) => {
+            console.log(x.data.rajaongkir.results)
+            this.setState({
+                provinces: x.data.rajaongkir.results
+            })
+        }).catch((err) => {
+            console.log(err)
+        })
 
         // get city API Raja Ongkir from route backend
-        // axios.get('http://localhost:2018/city').then((x) => {
-        //     console.log(x.data.rajaongkir.results)
-        //     this.setState({
-        //         cities: x.data.rajaongkir.results
-        //     })
-        // }).catch((err) => {
-        //         console.log(err)
-        // })
+        axios.get('http://localhost:2018/city').then((x) => {
+            console.log(x.data.rajaongkir.results)
+            this.setState({
+                cities: x.data.rajaongkir.results
+            })
+        }).catch((err) => {
+                console.log(err)
+        })
 
         axios.get(`http://localhost:2018/cart/${userID}`)
         .then((x) => {
@@ -109,15 +104,15 @@ class CheckoutAddress extends React.Component {
     }
 
     // fungsi untuk GET ongkir dari route backend yang dapet dari API Raja Ongkir
-    // getOngkir = (city) => {
-    //     axios.get(`http://localhost:2018/shipping/${this.state.dataUser.city}`).then((x) => {
-    //         this.setState({
-    //             ongkir: x.data.rajaongkir.results[0].costs[1].cost[0].value,
-                // subTotal: this.total() + this.state.ongkir
-            // })
+    getOngkir = (city) => {
+        axios.get(`http://localhost:2018/shipping/${city}`).then((x) => {
+            this.setState({
+                ongkir: x.data.rajaongkir.results[0].costs[1].cost[0].value,
+                subTotal: this.total() + this.state.ongkir
+            })
             // alert(x.data.rajaongkir.results[0].costs[1].cost[0].value)
-        // })    
-    // }
+        })    
+    }
 
     checkout = () => {
         // this.getOngkir();
@@ -127,6 +122,7 @@ class CheckoutAddress extends React.Component {
         var date = new Date();
         var order_date = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
         console.log(this.state.dataUser)
+        // alert(order_date)
         
         axios.post('http://localhost:2018/transaction', {
             transactionID: invoice,
@@ -137,7 +133,7 @@ class CheckoutAddress extends React.Component {
             country: this.state.dataUser.country,
             province: this.state.dataUser.province,
             city: this.state.dataUser.city,
-            zipcode: this.state.dataUser.postal_code,
+            zipcode: this.state.dataUser.zipcode,
             address: this.state.dataUser.address,
             subtotal: parseInt(this.total()) + this.state.ongkir,
             status: "NotPaid",
@@ -264,7 +260,14 @@ class CheckoutAddress extends React.Component {
                         <div className="col-sm-6">
                             <div className="form-group">
                                 <label for="checkout-country">Country</label>
-                                <select className="form-control" id="checkout-country">
+                                <select className="form-control" id="checkout-country"
+                                    value={this.state.dataUser.country}
+                                    onChange={(e) => {
+                                        let data = this.state.dataUser;
+                                        data.country = e.target.value;
+                                        this.setState({dataUser: data})
+                                    }}
+                                >
                                     <option hidden>Choose country</option>
                                     <option selected>Indonesia</option>
                                 </select>
@@ -298,23 +301,17 @@ class CheckoutAddress extends React.Component {
                                 <select className="form-control" id="checkout-city" value={this.state.dataUser.city} 
                                     onChange={(e) => {
                                         let data = this.state.dataUser;
-                                            data.city = e.target.value.split('-')[0]
-                                            data.postal_code = e.target.value.split('-')[1]
-                                            this.setState({dataUser: data})
-                                            
-                                            // untuk dapetin zipcode nya berdasarkan city user
-                                            axios.get(`http://localhost:2018/city/${e.target.value}`).then((x) => {
-                                                this.setState({
-                                                    postal_code: x.data.rajaongkir.results.postal_code
-                                                })
-                                            })
+                                        data.city = e.target.value.split('-')[0]
+                                        // get ongkir berdasarkan city_id
+                                        this.getOngkir(e.target.value);
+                                        // alert(e.target.value)
+                                        this.setState({dataUser: data})
                                     }}
                                 >
                                     <option hidden>Choose city</option>
                                     {this.state.cities ? this.state.cities.map((val) => {
                                         if(val.province_id == this.state.province_id || val.province_id == this.state.dataUser.province){
                                             return (
-                                                // buat auto generate zip code
                                                 <option value={val.city_id}>{val.city_name}</option>
                                             )}
                                         }) : ""}
@@ -324,11 +321,11 @@ class CheckoutAddress extends React.Component {
                         <div className="col-sm-6">
                             <div className="form-group">
                                 <label for="checkout-zip">ZIP Code</label>
-                                <input disabled className="form-control" type="text" id="checkout-zip" 
-                                    value={this.state.dataUser.postal_code || this.state.postal_code}
+                                <input className="form-control" type="text" id="checkout-zip" 
+                                    value={this.state.dataUser && this.state.dataUser.zipcode}
                                     onChange={(e) => {
                                         let data = this.state.dataUser;
-                                        data.postal_code = e.target.value
+                                        data.zipcode = e.target.value
                                         this.setState({
                                             dataUser: data
                                         })
@@ -391,9 +388,21 @@ class CheckoutAddress extends React.Component {
                         {/* Order Summary Widget */}
                         <section className="widget widget-order-summary">
                         
-                            <React.Fragment>
-                                <OrderSummary />
-                            </React.Fragment>
+                            <h3 className="widget-title">Order Summary</h3>
+                            <table className="table">
+                                <tr>
+                                    <td>Cart Subtotal:</td>
+                                    <td className="text-medium">Rp. {this.total().toLocaleString()}</td>
+                                </tr>
+                                <tr>
+                                    <td>Shipping (JNE Reguler):</td>
+                                    <td className="text-medium">Rp. {this.state.ongkir.toLocaleString()}</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td className="text-lg text-medium">Rp. {parseInt(this.total() + this.state.ongkir).toLocaleString()}</td>
+                                </tr>
+                            </table>
                     
                         </section>
                         

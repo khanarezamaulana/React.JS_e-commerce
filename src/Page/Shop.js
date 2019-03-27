@@ -137,6 +137,7 @@ class Shop extends React.Component {
     }
     else{
         alert("Anda harus Login!")
+        window.location.href="/login"
     }
     }
 

@@ -23,6 +23,8 @@ import MyAddress from './Page/MyAddress';
 import notFound404 from './Page/notFound404';
 import MyOrders from './Page/MyOrders';
 import ConfirmPayment from './Page/ConfirmPayment';
+import ordersData from './Admin/ordersData';
+import ordersDetail from './Page/ordersDetail';
 import axios from 'axios';
 
 class App extends Component {
@@ -125,6 +127,8 @@ class App extends Component {
           <Route path="/edituser/:id" component={editUser} />
           <Route path="/editproduct/:id" component={editProduct} />
           <Route path="/confirmpayment" component={ConfirmPayment} />
+          <Route path="/ordersdata" component={ordersData} />
+          <Route path="/ordersdetail" component={ordersDetail} />
           <Route path="/404" component={notFound404} />
         </div>
 

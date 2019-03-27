@@ -158,15 +158,15 @@ class ProductDetail extends React.Component {
                             }}
                             value={this.state.productData.size}
                             >
-                                <option>Chooze size</option>
-                                <option value={38}>38</option>
-                                <option value={39}>39</option>
+                                <option hidden>Chooze size</option>
+                                <option value={this.state.productData.size}>{this.state.productData.size}</option>
+                                {/* <option value={39}>39</option>
                                 <option value={40}>40</option>
                                 <option value={41}>41</option>
                                 <option value={42}>42</option>
                                 <option value={43}>43</option>
                                 <option value={44}>44</option>
-                                <option value={45}>45</option>
+                                <option value={45}>45</option> */}
                             </select>
                             </div>
                         </div>
@@ -179,10 +179,10 @@ class ProductDetail extends React.Component {
                                     this.setState({productData: data})
                             }}
                             value={this.state.productData.color}>
-                                <option value={"Dark Choco"}>Dark Choco</option>
-                                <option value={"Black"}>Black</option>
+                                <option value={this.state.productData.color}>{this.state.productData.color}</option>
+                                {/* <option value={"Black"}>Black</option>
                                 <option value={"Black-White"}>Black-White</option>
-                                <option value={"Navy"}>Navy</option>
+                                <option value={"Navy"}>Navy</option> */}
                             </select>
                             </div>
                         </div>

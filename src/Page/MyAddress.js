@@ -72,8 +72,8 @@ class MyAddress extends React.Component {
         // update data user dari halaman my profile
         axios.put(`http://localhost:2018/address/${userID}`, this.state.dataUser).then((x) => {
             console.log(x.data)
-            // alert("Profile Address Updated!");
-            // window.location.href = "/myaddress"
+            alert("Profile Address Updated!");
+            window.location.href = "/myaddress"
         }).catch(() => {
             console.log("Update Failed!")
             alert("Update Failed!")
@@ -120,10 +120,10 @@ class MyAddress extends React.Component {
                             </div>
                         </aside>
                         <nav className="list-group">
-                            <a className="list-group-item with-badge" href="/myorders" style={{cursor: "pointer"}}><i className="icon-bag"></i>Orders<span className="badge badge-primary badge-pill">6</span></a>
+                            <a className="list-group-item with-badge" href="/myorders" style={{cursor: "pointer"}}><i className="icon-bag"></i>Orders<span className="badge badge-primary badge-pill"></span></a>
                             <a className="list-group-item" href="/myprofile" style={{cursor: "pointer"}}><i className="icon-head"></i>Profile</a>
                             <a className="list-group-item active" href="/myaddress" style={{cursor: "pointer"}}><i className="icon-map"></i>Addresses</a>
-                            <a className="list-group-item with-badge" href="/mywishlist" style={{cursor: "pointer"}}><i className="icon-heart"></i>Wishlist<span className="badge badge-primary badge-pill">3</span></a>
+                            <a className="list-group-item with-badge" href="/mywishlist" style={{cursor: "pointer"}}><i className="icon-heart"></i>Wishlist<span className="badge badge-primary badge-pill"></span></a>
                             {/* <a className="list-group-item with-badge" href="account-tickets.html"><i className="icon-tag"></i>My Tickets<span className="badge badge-primary badge-pill">4</span></a> */}
                         </nav>
                         </div>
@@ -180,15 +180,15 @@ class MyAddress extends React.Component {
                                             onChange={(e) => {
                                                 let data = this.state.dataUser;
                                                     data.city = e.target.value.split('-')[0]
-                                                    data.postal_code = e.target.value.split('-')[1]
+                                                    // data.postal_code = e.target.value.split('-')[1]
                                                     this.setState({dataUser: data})
                                                     
                                                     // untuk dapetin zipcode nya berdasarkan city user
-                                                    axios.get(`http://localhost:2018/city/${e.target.value}`).then((x) => {
-                                                        this.setState({
-                                                            postal_code: x.data.rajaongkir.results.postal_code
-                                                        })
-                                                    })
+                                                    // axios.get(`http://localhost:2018/city/${e.target.value}`).then((x) => {
+                                                    //     this.setState({
+                                                    //         postal_code: x.data.rajaongkir.results.postal_code
+                                                    //     })
+                                                    // })
                                             }}
                                         >
                                             <option hidden>Choose City</option>
@@ -205,11 +205,11 @@ class MyAddress extends React.Component {
                                 <div className="col-md-6">
                                 <div className="form-group">
                                     <label for="account-zip">ZIP Code</label>
-                                    <input disabled className="form-control" type="text" id="account-zip" 
-                                        value={this.state.dataUser.postal_code || this.state.postal_code}
+                                    <input className="form-control" type="text" id="account-zip" 
+                                        value={this.state.dataUser.zipcode}
                                         onChange={(e) => {
                                             let data = this.state.dataUser;
-                                            data.postal_code = e.target.value
+                                            data.zipcode = e.target.value
                                             this.setState({
                                                 dataUser: data
                                             })
@@ -231,17 +231,19 @@ class MyAddress extends React.Component {
                                     />
                                 </div>
                                 </div>
-                                <div className="col-12 padding-top-1x">
-                                <h4>Shipping Address</h4>
-                                <hr className="padding-bottom-1x"/>
-                                <div className="custom-control custom-checkbox d-block">
-                                    <input className="custom-control-input" type="checkbox" id="same_address" checked/>
-                                    <label className="custom-control-label" for="same_address">Same as Contact Address</label>
-                                </div>
-                                <hr className="margin-top-1x margin-bottom-1x"/>
-                                <div className="text-right">
-                                    <button onClick={this.editUser} className="btn btn-primary margin-bottom-none" type="button" data-toast data-toast-position="topRight" data-toast-type="success" data-toast-icon="icon-circle-check" data-toast-title="Success!" data-toast-message="Your address updated successfuly.">Update Address</button>
-                                </div>
+
+                                {/*  padding-top-1x after col-12 */}
+                                <div className="col-12">
+                                    {/* <h4>Shipping Address</h4>
+                                    <hr className="padding-bottom-1x"/>
+                                    <div className="custom-control custom-checkbox d-block">
+                                        <input className="custom-control-input" type="checkbox" id="same_address" checked/>
+                                        <label className="custom-control-label" for="same_address">Same as Contact Address</label>
+                                    </div> */}
+                                    <hr className="margin-top-1x margin-bottom-1x"/>
+                                    <div className="text-right">
+                                        <button onClick={this.editUser} className="btn btn-primary margin-bottom-none" type="button" data-toast data-toast-position="topRight" data-toast-type="success" data-toast-icon="icon-circle-check" data-toast-title="Success!" data-toast-message="Your address updated successfuly.">Update Address</button>
+                                    </div>
                                 </div>
                             </form>
                         </div>

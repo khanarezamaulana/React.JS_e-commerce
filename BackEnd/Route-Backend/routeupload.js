@@ -51,4 +51,20 @@ uploadRouter.post('/usersupload', (req, res) => {
     })
 })
 
+// Upload Receipt
+uploadRouter.post('/uploadreceipt', (req, res) => {
+    console.log(req.body)
+    console.log(req.files)
+    var uploadFile = req.files.file
+    var namaFile = uploadFile.name
+    uploadFile.mv('./storageReceipt/' + namaFile, (err) => {
+        if(err){
+            res.send("error")
+        } else {
+            console.log("Upload Success !")
+            db.query(`update transaction set receipt = 'http://localhost:2018/filereceipt/${namaFile}' where transactionID = ${req.body.transactionID};`);
+        }
+    })
+})
+
 module.exports = uploadRouter;

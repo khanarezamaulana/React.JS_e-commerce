@@ -6,12 +6,15 @@ class CheckoutComplete extends React.Component {
     constructor(){
         super();
         this.state = {
-
             transactionID: "",
             namaBank: "",
             pemilikRekening: "",
             nomorRekening: "",
-            jumlahTransfer: ""
+            jumlahTransfer: "",
+            total: "",
+            cart: "",
+            ongkir: "",
+            subTotal: ""
         }
     }
 
@@ -22,21 +25,53 @@ class CheckoutComplete extends React.Component {
         axios.get(`http://localhost:2018/transaction/${userID}`).then((x) => {
             console.log(x.data[0])
             // console.log(userID)
-            // console.log('hahah')
+            console.log('hahah')
+            console.log(x.data)
+            
+            // get ongkir berdasarkan city_id
+            this.getOngkir(x.data[0].city);
+
             this.setState({
                 transactionID: x.data[0].transactionID
             })
         }).catch((err) => {
             console.log('error')
         })
+
+        // untuk dapetin data cart user
+        axios.get(`http://localhost:2018/cart/${userID}`)
+        .then((x) => {
+            this.setState({
+                cart: x.data
+            })
+        })
+    }
+
+    // fungsi untuk menghitung total harga (subTotal)
+    total(){
+        var total = 0;
+        for(var i = 0; i<this.state.cart.length; i++){
+            total += this.state.cart[i].totalPrice
+        }
+        return total 
+    }
+
+    // fungsi untuk GET ongkir dari route backend yang dapet dari API Raja Ongkir
+    getOngkir = (city) => {
+        axios.get(`http://localhost:2018/shipping/${city}`).then((x) => {
+            this.setState({
+                ongkir: x.data.rajaongkir.results[0].costs[1].cost[0].value,
+                // subTotal: this.total() + this.state.ongkir
+            })
+        })    
     }
 
     render() {
         return(
 
             <div style={{paddingTop: "180px"}}>
-                    {/* Page Content */}
-                    <div className="container padding-bottom-3x mb-2">
+                {/* Page Content */}
+                <div className="container padding-bottom-3x mb-2">
                     <div className="card text-center">
                         <div className="card-body padding-top-2x">
                         <h3 className="card-title">Thank you for your order!</h3>
@@ -57,6 +92,32 @@ class CheckoutComplete extends React.Component {
                         </div>
                         </div>
                     </div>
+
+                    {/* Sidebar */}
+                    {/* <div className="col-xl-3 col-lg-4" style={{marginBottom: "80px"}}>
+                        <aside className="sidebar">
+                        <div className="padding-top-2x hidden-lg-up"></div> */}
+                        
+                        {/* Order Summary Widget */}
+                        {/* <section className="widget widget-order-summary">
+                            <h3 className="widget-title">Order Summary</h3>
+                            <table className="table">
+                                <tr>
+                                    <td>Cart Subtotal:</td>
+                                    <td className="text-medium">Rp. {this.total().toLocaleString()}</td>
+                                </tr>
+                                <tr>
+                                    <td>Shipping (JNE Reguler):</td>
+                                    <td className="text-medium">Rp. {this.state.ongkir.toLocaleString()}</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td className="text-lg text-medium">Rp. {parseInt(this.total() + this.state.ongkir).toLocaleString()}</td>
+                                </tr>
+                            </table>
+                        </section>
+                        </aside>
+                    </div> */}
                 </div>
             </div>
 

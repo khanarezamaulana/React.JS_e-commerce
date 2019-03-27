@@ -30,22 +30,22 @@ class LoginRegister extends React.Component {
             alert("Password dont match!")
         }
         else{
-        axios.post('http://localhost:2018/signup', this.state.dataUser).then((x) => {
-            console.log(x.data)
-            if (x.data.status == "Failed") {
-                alert("Register failed!")
-            }
-            else if (x.data.status == "alreadyExist") {
-                alert("Akun sudah terdaftar!")
-            }
-            else {
-                alert("SignUp Successfully, you have to login!")
-                window.location.href = "/login"
-            }
+            axios.post('http://localhost:2018/signup', this.state.dataUser).then((x) => {
+                console.log(x.data)
+                if (x.data.status == "Failed") {
+                    alert("Register failed!")
+                }
+                else if (x.data.status == "alreadyExist") {
+                    alert("Akun sudah terdaftar!")
+                }
+                else {
+                    alert("SignUp Successfully, you have to login!")
+                    window.location.href = "/login"
+                }
 
-        }).catch(() => {
-            alert('Failed SignUp!')
-        })
+            }).catch(() => {
+                alert('Failed SignUp!')
+            })
         }
     }
 

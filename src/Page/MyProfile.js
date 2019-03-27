@@ -11,11 +11,13 @@ class MyProfile extends React.Component {
                 lastname: "",
                 email: "",
                 phoneNumber: "",
-                password: "",
-                newPassword: "",
                 profilePicture: "",
                 files: "",
                 created_at: ""
+            },
+            dataPassword: {
+                password: "",
+                newPassword: ""
             },
             confirmPassword: "",
             isLoading: false,
@@ -40,6 +42,7 @@ class MyProfile extends React.Component {
         })
     }
 
+    // fungsi buat edit user
     editUser = () => {
         // get userID yang lagi login dari local storage
         var userID = localStorage.getItem("userid")
@@ -70,19 +73,103 @@ class MyProfile extends React.Component {
         }).catch(() => {
             console.log("Update Failed!")
         })
+    }
 
-        // request ganti password user
-        axios.put(`http://localhost:2018/changepassword/${userID}`, this.state.dataUser).then((x) => {
-            console.log(x.data)
-            if(x.data.status == "Your old password is wrong!") {
-               alert("Your old password is wrong!")
-            }
-            else {
-                alert("Password Changed!")
-            }
-        }).catch(() => {
-            console.log('gagal')
-        })
+    // fungsi buat update password
+    updatePassword = () => {
+        // get userID yang lagi login dari local storage
+        var userID = localStorage.getItem("userid")
+
+        // untuk konfirmasi password, jika password tidak sama maka update gagal
+        if(this.state.dataPassword.newPassword != this.state.confirmPassword){
+            alert("Password dont match!")
+        }
+        else {
+            // request ganti password user
+            axios.put(`http://localhost:2018/changepassword/${userID}`, this.state.dataPassword).then((x) => {
+                console.log(x.data)
+                if(x.data.status == "Your old password is wrong!") {
+                alert("Your old password is wrong!")
+                }
+                else {
+                    alert("Password Changed!")
+                    window.location.href = "/myprofile"
+                }
+            }).catch(() => {
+                console.log('gagal')
+            })
+        }
+    }
+
+    // modal update password
+    displayModal() {
+        return (
+            <div className="modal fade" id="modalDefault" tabindex="-1" role="dialog">
+                <div className="modal-dialog" role="document">
+                    <div className="modal-content">
+                    <div className="modal-header">
+                        <h4 className="modal-title text-uppercase" style={{marginLeft: "140px"}}>Update Password</h4>
+                        <button className="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div className="modal-body">
+                        <form className="row">
+                            <div className="col-md-6">
+                                <div className="form-group">
+                                    <label for="account-pass">Current Password</label>
+                                    <input className="form-control" type="password" id="account-pass" required 
+                                        onChange={(e) => {
+                                            let data = this.state.dataPassword;
+                                            data.password = e.target.value;
+                                            this.setState({dataPassword: data})
+                                        }}
+                                        placeholder="Password"
+                                    />
+                                </div>
+                            </div>
+
+                            {/* garis pemisah */}
+                            <div className="col-12">
+                                <hr className="mt-0 mb-3"/>
+                            </div>
+
+                            <div className="col-md-6">
+                                <div className="form-group">
+                                    <label for="account-pass">New Password</label>
+                                    <input className="form-control" type="password" id="account-pass" required 
+                                        onChange={(e) => {
+                                            let data = this.state.dataPassword;
+                                            data.newPassword = e.target.value;
+                                            this.setState({dataPassword: data})
+                                        }}
+                                        placeholder="New Password"
+                                    />
+                                </div>
+                            </div>
+                            <div className="col-md-6">
+                                <div className="form-group">
+                                    <label for="account-confirm-pass">Confirm Password</label>
+                                    <input className="form-control" type="password" id="account-confirm-pass" onKeyDown={this.handleEnter} required 
+                                        value={this.state.confirmPassword}
+                                        onChange={(e) => {
+                                            this.setState({
+                                                confirmPassword: e.target.value
+                                            })
+                                        }}
+                                        placeholder="Confirm password"
+                                        onKeyDown={this.handleEnter}
+                                    />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div className="modal-footer">
+                        {/* <button class="btn btn-outline-secondary btn-sm" type="button" data-dismiss="modal">Close</button> */}
+                        <button onClick={this.updatePassword} class="btn btn-primary btn-sm" type="button">Update</button>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        )
     }
 
     render() {
@@ -119,7 +206,7 @@ class MyProfile extends React.Component {
                                 </div>
                                 <div className="user-info">
                                 <div className="user-avatar">
-                                    <input style={{width: "30px", height: "30px"}} className="edit-avatar" type="file" accept="image/*" name='filename' 
+                                    <input style={{width: "30px", height: "30px"}} className="edit-avatar" type="file" accept="image/*" name='filename' data-toggle="tooltip" title="Change Profile Picture!"
                                         onChange={(e) => {
                                             let data = this.state.dataUser;
                                             data.files = e.target.files[0];
@@ -139,10 +226,10 @@ class MyProfile extends React.Component {
 
                             {/* Menu Profile */}
                             <nav className="list-group">
-                                <a className="list-group-item with-badge" href="/myorders" style={{cursor: "pointer"}}><i className="icon-bag"></i>Orders<span className="badge badge-primary badge-pill">6</span></a>
+                                <a className="list-group-item with-badge" href="/myorders" style={{cursor: "pointer"}}><i className="icon-bag"></i>Orders<span className="badge badge-primary badge-pill"></span></a>
                                 <a className="list-group-item active" href="/myprofile" style={{cursor: "pointer"}}><i className="icon-head"></i>Profile</a>
                                 <a className="list-group-item" href="/myaddress" style={{cursor: "pointer"}}><i className="icon-map"></i>Addresses</a>
-                                <a className="list-group-item with-badge" href="mywishlist" style={{cursor: "pointer"}}><i className="icon-heart"></i>Wishlist<span className="badge badge-primary badge-pill">3</span></a>
+                                <a className="list-group-item with-badge" href="mywishlist" style={{cursor: "pointer"}}><i className="icon-heart"></i>Wishlist<span className="badge badge-primary badge-pill"></span></a>
                                 {/* <a className="list-group-item with-badge" href="account-tickets.html"><i className="icon-tag"></i>My Tickets<span className="badge badge-primary badge-pill">4</span></a> */}
                             </nav>
                         </div>
@@ -216,63 +303,14 @@ class MyProfile extends React.Component {
                                     </div>
                                 </div>
                                 <div className="col-12">
-                                <label>Change Password</label>
+                                {/* <label>Change Password</label> */}
                                 <hr className="mt-0 mb-3"/>
                                 </div>
-                                <div className="col-md-6">
-                                <div className="form-group">
-                                    <label for="account-pass">Current Password</label>
-                                    <input className="form-control" type="password" id="account-pass" required 
-                                        onChange={(e) => {
-                                            let data = this.state.dataUser;
-                                            data.password = e.target.value;
-                                            this.setState({dataUser: data})
-                                        }}
-                                        placeholder="Password"
-                                    />
-                                </div>
-                                </div>
-                                
+                                {this.displayModal()}
                                 {/* Cuma buat pemisah */}
-                                <div className="col-md-6"></div>
-
-                                {/* New Password */}
-                                <div className="col-md-6">
-                                    <div className="form-group">
-                                        <label for="account-pass">New Password</label>
-                                        <input className="form-control" type="password" id="account-pass" required 
-                                            onChange={(e) => {
-                                                let data = this.state.dataUser;
-                                                data.newPassword = e.target.value;
-                                                this.setState({dataUser: data})
-                                            }}
-                                            placeholder="New Password"
-                                        />
-                                    </div>
+                                <div className="col-md-12">
+                                <button onClick={this.changePassword} className="btn btn-outline-primary btn-block margin-top-none" type="button" data-toggle="modal" data-target="#modalDefault">Update Password</button>
                                 </div>
-
-                                {/* Confirm Password */}
-                                <div className="col-md-6">
-                                    <div className="form-group">
-                                        <label for="account-confirm-pass">Confirm Password</label>
-                                        <input className="form-control" type="password" id="account-confirm-pass" onKeyDown={this.handleEnter} required 
-                                            value={this.state.confirmPassword}
-                                            onChange={(e) => {
-                                                this.setState({
-                                                    confirmPassword: e.target.value
-                                                })
-                                            }}
-                                            placeholder="Confirm password"
-                                            onKeyDown={this.handleEnter}
-                                        />
-                                    </div>
-                                </div>
-                                {/* <div className="col-md-6">
-                                    <div className="form-group">
-                                        <label>Change Profile Picture</label>
-                                        <input type="file" accept="image/*" name="filename" />
-                                    </div>
-                                </div> */}
                                 <div className="col-12">
                                 <hr className="mt-2 mb-3"/>
                                 <div className="d-flex flex-wrap justify-content-between align-items-center">

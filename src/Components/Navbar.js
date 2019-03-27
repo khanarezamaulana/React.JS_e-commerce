@@ -196,7 +196,7 @@ class Navbar extends React.Component {
                                         </div>
                                     </li>
                                         <li><a className="text-capitalize" href="/myprofile">My Profile</a></li>
-                                        <li><a className="text-capitalize" href="/myorders">My Orders</a></li>
+                                        <li><a className="text-capitalize" href="/myorders">Orders List</a></li>
                                     <li className="sub-menu-separator"></li>
                                     <li onClick={() => {
                                         localStorage.removeItem("username");
